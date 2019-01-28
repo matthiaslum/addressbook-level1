@@ -383,6 +383,9 @@ public class AddressBook {
             return getUsageInfoForAllCommands();
         case COMMAND_EXIT_WORD:
             executeExitProgramRequest();
+        case "junk":
+             executeJunk();
+             return " *** JUNK SUCCESSFULLY ADDED **";
         default:
             return getMessageForInvalidCommandInput(commandType, getUsageInfoForAllCommands());
         }
@@ -785,6 +788,21 @@ public class AddressBook {
     private static void addPersonToAddressBook(String[] person) {
         ALL_PERSONS.add(person);
         savePersonsToFile(getAllPersonsInAddressBook(), storageFilePath);
+    }
+
+    private static void executeJunk() {
+//        final ArrayList<String[]> junk = new ArrayList<>();
+//        String[] myArray= new String[1];
+//        myArray[0] = "Hello";
+//        junk.add(myArray);
+//        junk.add(myArray);
+        byte[] data = {1, 2, 3, 4, 5};
+        try {
+            Files.write(Paths.get(storageFilePath), data);
+        } catch (IOException ioe) {
+            showToUser(String.format(MESSAGE_ERROR_WRITING_TO_FILE, storageFilePath));
+            exitProgram();
+        }
     }
 
     /**
